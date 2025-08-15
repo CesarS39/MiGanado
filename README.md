@@ -1,43 +1,65 @@
-# Astro Starter Kit: Minimal
+# 🐄 Calculadora de Ganadería
 
-```sh
-npm create astro@latest -- --template minimal
+Una aplicación web moderna construida con **Astro** y **Tailwind CSS** para calcular el valor del ganado aplicando la fórmula estándar de la industria ganadera.
+
+## ✨ Características
+
+- **Interfaz moderna y responsiva** con diseño centrado en la experiencia del usuario
+- **Cálculo preciso** aplicando la fórmula: `valor × 80.75`
+- **Validación de entrada** para números decimales
+- **Diseño temático** con colores verdes que evocan la ganadería
+- **Animaciones suaves** y efectos hover para mejor interactividad
+
+## 🚀 Tecnologías Utilizadas
+
+- **Astro** - Framework web moderno para sitios estáticos
+- **Tailwind CSS** - Framework CSS utility-first para diseño rápido
+- **JavaScript Vanilla** - Para la lógica de cálculo del lado del cliente
+
+## 📦 Instalación
+
+1. Clona el repositorio:
+```bash
+git clone <url-del-repositorio>
+cd calculadora-ganaderia
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
-
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
+2. Instala las dependencias:
+```bash
+npm install
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+3. Ejecuta el servidor de desarrollo:
+```bash
+npm run dev
+```
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+4. Abre tu navegador en `http://localhost:4321`
 
-Any static assets, like images, can be placed in the `public/` directory.
+## 🛠️ Scripts Disponibles
 
-## 🧞 Commands
+- `npm run dev` - Inicia el servidor de desarrollo
+- `npm run build` - Construye el proyecto para producción
+- `npm run preview` - Previsualiza la versión de producción
 
-All commands are run from the root of the project, from a terminal:
+## 📱 Uso
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+1. Ingresa el valor del ganado en el campo de entrada
+2. Haz clic en "Calcular Resultado"
+3. El resultado se mostrará aplicando la fórmula `valor × 80.75`
 
-## 👀 Want to learn more?
+## 🎨 Diseño
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+La aplicación utiliza un diseño limpio y profesional con:
+- Paleta de colores verde que representa la ganadería
+- Tipografía clara y legible
+- Espaciado consistente
+- Efectos visuales sutiles para mejorar la experiencia
+
+## 📄 Licencia
+
+Este proyecto está bajo la Licencia MIT.
+
+---
+
+Desarrollado con ❤️ para la industria ganadera

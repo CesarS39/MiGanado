@@ -1,0 +1,58 @@
+---
+// src/layouts/Layout.astro
+import '../styles/global.css';
+export interface Props {
+	title: string;
+	description?: string;
+}
+
+const { title, description = "Calculadora profesional de ganado en pie para determinar el valor comercial" } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="description" content={description} />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title}</title>
+		
+		<!-- Meta tags adicionales -->
+		<meta name="keywords" content="calculadora ganado, ganadería, precio ganado, ganado en pie, MXN" />
+		<meta name="author" content="Calculadora Ganadera" />
+		
+		<!-- Open Graph -->
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:type" content="website" />
+		
+		<!-- Preload de fuentes si las usas -->
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+	</head>
+	<body>
+		<main>
+			<slot />
+		</main>
+		
+		<!-- Scripts globales si los necesitas -->
+		<style is:global>
+			/* Estilos globales adicionales */
+			* {
+				box-sizing: border-box;
+			}
+			
+			html {
+				scroll-behavior: smooth;
+			}
+			
+			body {
+				margin: 0;
+				padding: 0;
+				font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+			}
+		</style>
+	</body>
+</html>

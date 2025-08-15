@@ -1,0 +1,149 @@
+---
+// src/components/CalculatorForm.astro
+---
+
+<form id="calculatorForm" class="calculator-form">
+  <!-- Weight Input -->
+  <div class="mb-6">
+    <div class="relative">
+      <input
+        type="number"
+        id="inputValue"
+        name="inputValue"
+        step="0.01"
+        min="0"
+        placeholder="Peso en pie"
+        class="w-full px-4 py-4 pr-12 border-2 border-gray-300 rounded-xl text-lg font-medium focus:ring-2 focus:ring-emerald-200 focus:border-emerald-500 transition-all duration-200 bg-white hover:border-gray-400"
+        required
+      />
+      <div class="absolute inset-y-0 right-0 flex items-center pr-4">
+        <span class="text-gray-500 font-medium">Kg</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Calculate Button -->
+  <button
+    type="submit"
+    class="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-200 transform hover:scale-[1.02] hover:shadow-lg focus:outline-none focus:ring-4 focus:ring-emerald-200 active:scale-[0.98] flex items-center justify-center space-x-3"
+  >
+    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+    </svg>
+    <span>Calcular valor comercial</span>
+  </button>
+</form>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('calculatorForm');
+    const inputEl = document.getElementById('inputValue');
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const inputValue = parseFloat(inputEl.value);
+
+      if (isNaN(inputValue) || inputValue <= 0) {
+        // Show error state
+        inputEl.classList.add('border-red-500', 'bg-red-50');
+        inputEl.style.animation = 'shake 0.5s ease-in-out';
+
+        setTimeout(() => {
+          inputEl.classList.remove('border-red-500', 'bg-red-50');
+          inputEl.style.animation = '';
+        }, 2000);
+
+        return;
+      }
+
+      // Get current cattle type and price
+      const state = window.calculatorState || { selectedType: 'corral', prices: { corral: 80.75 } };
+      const currentPrice = state.prices[state.selectedType] || 80.75;
+      const result = inputValue * currentPrice;
+
+      // Update global state
+      state.weight = inputValue;
+      state.result = result;
+
+      // Show result panel
+      showResultPanel(inputValue, result, currentPrice, state.selectedType);
+    });
+
+    function showResultPanel(weight, result, price, cattleType) {
+      const resultContainer = document.getElementById('resultContainer');
+      if (!resultContainer) return;
+
+      const resultDiv = resultContainer.querySelector('#result');
+      if (!resultDiv) return;
+
+      // Update result values
+      const weightDisplay = document.getElementById('inputWeight');
+      const resultDisplay = document.getElementById('resultValue');
+      const priceDisplay = document.getElementById('basePrice');
+      const cattleTypeDisplay = document.getElementById('cattleTypeDisplay');
+
+      if (weightDisplay) animateCounter(weightDisplay, 0, weight, 800);
+      if (resultDisplay) animateCounter(resultDisplay, 0, result, 1000);
+      if (priceDisplay) priceDisplay.textContent = `$${price.toFixed(2)} MXN/kg`;
+      if (cattleTypeDisplay) {
+        const typeNames = {
+          corral: 'Corral',
+          toro: 'Toro',
+          vaca: 'Vaca',
+          novillona: 'Novillona',
+          pradera: 'Pradera'
+        };
+        cattleTypeDisplay.textContent = typeNames[cattleType] || 'Corral';
+      }
+
+      // Show result with animation
+      resultDiv.classList.remove('hidden');
+      resultDiv.style.opacity = '0';
+      resultDiv.style.transform = 'translateY(20px)';
+
+      setTimeout(() => {
+        resultDiv.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+        resultDiv.style.opacity = '1';
+        resultDiv.style.transform = 'translateY(0)';
+
+        // Scroll to result
+        setTimeout(() => {
+          resultDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 300);
+      }, 100);
+    }
+
+    // Counter animation function
+    function animateCounter(element, start, end, duration) {
+      if (!element) return;
+      
+      let current = start;
+      const increment = (end - start) / (duration / 16);
+
+      function updateCounter() {
+        current += increment;
+        if ((increment > 0 && current >= end) || (increment < 0 && current <= end)) {
+          current = end;
+        }
+
+        const opts = { minimumFractionDigits: 2, maximumFractionDigits: 2 };
+        element.textContent = current.toLocaleString('es-MX', opts);
+
+        if (current !== end) {
+          requestAnimationFrame(updateCounter);
+        }
+      }
+
+      updateCounter();
+    }
+  });
+</script>
+
+<style>
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-8px); }
+    20%, 40%, 60%, 80% { transform: translateX(8px); }
+  }
+</style>

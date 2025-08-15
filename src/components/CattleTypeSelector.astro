@@ -1,0 +1,121 @@
+---
+// src/components/CattleTypeSelector.astro
+---
+
+<div class="cattle-type-selector">
+  <h3 class="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+    <div class="w-6 h-6 bg-emerald-500 rounded-lg flex items-center justify-center mr-3">
+      <span class="text-white text-sm">🐄</span>
+    </div>
+    Valor ganado en pie
+  </h3>
+  
+  <p class="text-gray-600 mb-4">Ingrese el peso del bovino 🐂</p>
+  
+  <div class="grid grid-cols-3 md:grid-cols-5 gap-2 mb-6">
+    <button 
+      data-cattle-type="corral" 
+      data-price="80.75"
+      class="cattle-type-btn bg-white border-2 border-gray-200 rounded-xl p-3 text-center hover:border-emerald-500 hover:bg-emerald-50 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-200"
+    >
+      <div class="text-2xl mb-1">🐄</div>
+      <div class="text-xs font-medium text-gray-700">Corral</div>
+    </button>
+    
+    <button 
+      data-cattle-type="toro" 
+      data-price="85.20"
+      class="cattle-type-btn bg-white border-2 border-gray-200 rounded-xl p-3 text-center hover:border-emerald-500 hover:bg-emerald-50 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-200"
+    >
+      <div class="text-2xl mb-1">🐂</div>
+      <div class="text-xs font-medium text-gray-700">Toro</div>
+    </button>
+    
+    <button 
+      data-cattle-type="vaca" 
+      data-price="78.50"
+      class="cattle-type-btn bg-white border-2 border-gray-200 rounded-xl p-3 text-center hover:border-emerald-500 hover:bg-emerald-50 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-200"
+    >
+      <div class="text-2xl mb-1">🐮</div>
+      <div class="text-xs font-medium text-gray-700">Vaca</div>
+    </button>
+    
+    <button 
+      data-cattle-type="novillona" 
+      data-price="82.30"
+      class="cattle-type-btn bg-white border-2 border-gray-200 rounded-xl p-3 text-center hover:border-emerald-500 hover:bg-emerald-50 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-200"
+    >
+      <div class="text-2xl mb-1">🐄</div>
+      <div class="text-xs font-medium text-gray-700">Novillona</div>
+    </button>
+    
+    <button 
+      data-cattle-type="pradera" 
+      data-price="76.90"
+      class="cattle-type-btn bg-white border-2 border-gray-200 rounded-xl p-3 text-center hover:border-emerald-500 hover:bg-emerald-50 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-200"
+    >
+      <div class="text-2xl mb-1">🌿</div>
+      <div class="text-xs font-medium text-gray-700">Pradera</div>
+    </button>
+  </div>
+</div>
+
+<script>
+  // Cattle type selection
+  document.addEventListener('DOMContentLoaded', function() {
+    const typeButtons = document.querySelectorAll('[data-cattle-type]');
+    
+    typeButtons.forEach(button => {
+      button.addEventListener('click', function() {
+        // Remove active class from all buttons
+        typeButtons.forEach(btn => {
+          btn.classList.remove('border-emerald-500', 'bg-emerald-50', 'ring-2', 'ring-emerald-200');
+          btn.classList.add('border-gray-200');
+        });
+        
+        // Add active class to clicked button
+        this.classList.remove('border-gray-200');
+        this.classList.add('border-emerald-500', 'bg-emerald-50', 'ring-2', 'ring-emerald-200');
+        
+        // Update global state
+        const cattleType = this.getAttribute('data-cattle-type');
+        const price = parseFloat(this.getAttribute('data-price'));
+        
+        if (window.calculatorState) {
+          window.calculatorState.selectedType = cattleType;
+          window.calculatorState.prices[cattleType] = price;
+        }
+        
+        // Update price display if it exists
+        const priceDisplay = document.getElementById('currentPrice');
+        if (priceDisplay) {
+          priceDisplay.textContent = `$${price.toFixed(2)} MXN/kg`;
+        }
+        
+        // Clear previous results
+        const resultContainer = document.getElementById('resultContainer');
+        if (resultContainer) {
+          const resultPanel = resultContainer.querySelector('#result');
+          if (resultPanel) {
+            resultPanel.classList.add('hidden');
+          }
+        }
+      });
+    });
+  });
+</script>
+
+<style>
+  .cattle-type-btn {
+    min-height: 70px;
+  }
+  
+  .cattle-type-btn:hover {
+    transform: translateY(-1px);
+  }
+  
+  .cattle-type-btn.active {
+    border-color: #10b981;
+    background-color: #f0fdf4;
+  }
+</style>
